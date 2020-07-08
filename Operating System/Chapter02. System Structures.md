@@ -63,5 +63,72 @@
 
 ![사용자 어플리케이션에서 open() 시스템 콜을 호출해 파일을 여는 과정.](https://user-images.githubusercontent.com/6410412/54861485-d9f48c00-4d6c-11e9-8eb6-f1bd59fa582d.png)
 
+- **시스템 콜 테이블(System Call Table)** == 인터럽트 벡터(Interrupt Vector)
 
+  : 어떤 동작들이 할당된 메모리의 특정 주소 범위
+
+  ex) `fopen()` 함수를 호출하면, 운영체제는 파일을 여는 함수를 찾기 위해 시스템 콜 테이블을 참조
+
+- **인터럽트 서비스 루틴(Interrupt Service Routine)**
+
+  : 시스템 콜 테이블의 주소가 가리키는 것???
+
+- 사용자 프로그램이 운영체제에게 매개변수를 넘기는 방법
+
+  ```markdown
+  1. Call by value : 매개변수의 값 자체를 복사해서 CPU 레지스터에 전달한다.
+  2. Call by reference : 값의 메모리 주소를 전달한다. 많은 값을 전달한다면 이렇게 하는 것이 효율적이다.
+  3. 프로그램을 통해 스택(Stack)에 매개변수를 추가하고, 운영체제를 통해 값을 뺀다.
+  ```
+
+
+
+<h2> Types of System Calls </h2>
+
+---
+
+```markdown
+1. 프로세스 제어 : end, abort, load, execute
+2. 파일 관리 : create, delete, open, close, read, write
+3. 장치 관리 : read, write, request, release
+4. 정보 유지 : get/set time or date
+5. 통신 : send/receive messages, transfer status
+6. 보호
+```
+
+
+
+<h2>Operating System Structure</h2>
+
+---
+
+<h3> Simple Structure</h3>
+
+- 과거에는 계층이 구분되어 있지 않아 사용자 프로그램에 문제가 생기면 전체 시스템에 문제가 생겼다.
+- UNIX 시스템 구조는 MS-DOS에 비해 기능이 분리되었지만, 하나의 계층이 너무 많은 일을 했다.
+
+<H3> Layered Approach</h3>
+
+![레이어드 운영체제 구조.](https://t1.daumcdn.net/cfile/tistory/994A513C5ADF038824)
+
+- 가장 아래에 있는 계층(레이어 0)은 하드웨어고, 가장 높은 계층(레이어 N)은 사용자 인터페이스
+- 하나의 계층에만 신경쓰면 다른 계층에는 아무런 신경을 쓰지 않아도 되기에 유지보수가 아주 편하다.
+
+<h3> Microkernels</h3>
+
+- 커널에서 핵심적인 요소만 남긴 가벼운 커널
+- 커널이 커질수록 문제가 생길 가능성이 높기에, 유지보수를 위해 커널을 가볍게 만들 필요가 있음
+- OS X의 커널(Darwin)의 일부가 마이크로커널 Mach를 기반으로 만들어졌으며, IoT에도 마이크로커널이 사용
+
+<h3> Modules</h3>
+
+- 커널을 확장하는 기술
+- 프로세스에 실시간으로 모듈을 붙여 작동시킬 수 있고, 각 기능들을 독립적으로 관리할 수 있어 효과적으로 시스템 유지가 가능
+- 장치 드라이버는 모두 모듈로 구현 / 윈도우에서 .dll 파일이 모듈
+
+<h3> Hybrid Systems</h3>
+
+- 커널의 핵심만 남기고 나머지는 따로 구현한 시스템
+- OS X의 경우 BSD가 핵심이지만 나머지는 모두 애플이 자체 구현
+- 안드로이드는 리누슥 커널위에 자체 구현한 라이브러리를 올린 시스템
 
